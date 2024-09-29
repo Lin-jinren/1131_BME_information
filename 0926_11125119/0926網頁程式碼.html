@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>高血壓診斷患者資料</title>
+</head>
+
+<body>
+
+    <h1>高血壓診斷患者資料</h1>
+
+    <form id="patientForm">
+        <!-- Patient Information -->
+        <label for="name">姓名:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="gender">性別:</label>
+        <select id="gender" name="gender" required>
+            <option value="male">男性</option>
+            <option value="female">女性</option>
+        </select>
+
+        <label for="student_id">學號:</label>
+        <input type="text" id="student_id" name="student_id" required>
+
+
+        <label for="birthday">生日:</label>
+        <input type="date" id="birthday" name="birthday" required>
+
+        <!-- Heart Rate Observation -->
+        <h2>心率觀察</h2>
+        <label for="heartRate">心率值 (次/分):</label>
+        <input type="number" id="heartRate" name="heartRate" min="1" required>
+
+        <label for="heartRateDate">日期和時間:</label>
+        <input type="datetime-local" id="heartRateDate" name="heartRateDate" required>
+
+        <!-- Blood Pressure Observation -->
+
+        <!---完成
+     標題:血壓觀察
+     -輸入框:收縮壓值（mmHg）與舒張壓值（mmHg）
+     -選擇框：日期和時間-->
+
+
+        <!-- Submit Button -->
+        <input type="submit" value="提交">
+
+        <h2>提交的內容</h2>
+        <textarea id="displayArea" rows="6" cols="50" readonly></textarea>
+    </form>
+
+    <script>
+
+        document.getElementById('patientForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Get from data
+            const formData = new FormData(event.target);
+
+            //Process and send data to backend
+            console.log('Form Data:', Object.fromEntries(formData));
+        });
+
+    </script>
+
+</body>
+
+</html>
