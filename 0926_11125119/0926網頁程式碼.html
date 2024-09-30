@@ -65,14 +65,14 @@
             console.log('Form Data:', Object.fromEntries(formData));
         });
 
-        document.getElementById('patientForm').addEventListener('submit'),function (event){
+        document.getElementById('patientForm').addEventListener('submit',function (event){
             event.preventDefault();
 
             const formData = Object.fromEntries(new FormData(event.target));
 
             const displayArea = document.getElementById('displayArea');
             displayArea.value = JSON.stringify(formData, null, 2);
-        }
+        });
     </script>
 
 </body>
