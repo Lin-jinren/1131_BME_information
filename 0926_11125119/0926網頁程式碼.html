@@ -39,12 +39,13 @@
         <input type="datetime-local" id="heartRateDate" name="heartRateDate" required>
 
         <!-- Blood Pressure Observation -->
-
-        <!---完成
-     標題:血壓觀察
-     -輸入框:收縮壓值（mmHg）與舒張壓值（mmHg）
-     -選擇框：日期和時間-->
-
+        <h2>血壓觀察</h2>
+        <label for="BloodPressure_p">收縮壓值(mmHg):</label>
+        <input type="number" id="BloodPressure_p" name="BloodPressure_p" min="1" required>
+        <label for="BloodPressure_r">舒張壓值(mmHg):</label>
+        <input type="number" id="BloodPressure_r" name="BloodPressure_r" min="1" required>
+        <label for="BloodPressureDate">日期和時間:</label>
+        <input type="datetime-local" id="BloodPressureDate" name="BloodPressureDate" required>
 
         <!-- Submit Button -->
         <input type="submit" value="提交">
