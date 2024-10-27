@@ -1,0 +1,87 @@
+<!DOCTYPE html> 
+<!-- 宣告文件類型為HTML -->
+<html lang="zh"> 
+<!-- 定義HTML文件，並設定語言為中文 -->
+
+<head>
+    <meta charset="UTF-8"> 
+    <!-- 設定網頁的編碼為UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <!-- 設定視窗寬度與設備寬度一致 -->
+    <title>病歷</title> 
+    <!-- 設定網頁的標題 -->
+</head>
+
+<body>
+    <h2>基本個人訊息</h2> 
+    <!-- 顯示標題，字體為h2大小 -->
+    <p>姓名:楊蔔瑾</p> 
+    <!-- 段落顯示 -->
+
+    <!-- <br/> --> 
+    <!-- 換行 -->
+
+    <label for="Student number">學號：</label> 
+    <!-- 顯示 "學號" 的標籤，與id為"Student number"的輸入框對應 -->
+    <input type="text" id="Student number"> 
+    <!-- 建立一個文本輸入框，供使用者輸入學號 -->
+    <br/> 
+    <!-- 換行 -->
+    <label for="department">科系：</label> 
+    <!-- 顯示 "科系" 的標籤 -->
+    <span>生物醫學工程學系</span> 
+    <!-- 使用span標籤顯示文字 -->
+
+    <!-- <br/> --> 
+    <!-- 換行 -->
+
+    <label for="birth">出生日期：</label> 
+    <!-- 顯示 "出生日期" 的標籤 -->
+    <input type="date"> 
+    <!-- 建立一個日期選擇輸入框，供使用者選擇出生日期 -->
+    <br/> 
+    <!-- 換行 -->
+    <label for="gender">性別：</label> 
+    <!-- 顯示 "性別" 的標籤 -->
+    <input type="checkbox">男 
+    <!-- 建立一個勾選框，對應性別 "男" -->
+    <input type="checkbox">女 
+    <!-- 建立一個勾選框，對應性別 "女" -->
+
+    <hr/> 
+    <!-- 插入一條水平分隔線 -->
+    <h2>生理監測數據</h2> 
+    <!-- 顯示標題"生理監測數據"，字體為h2大小-->
+    <label for="height">身高(cm)：</label> 
+    <!-- 顯示 "身高(cm)" 的標籤 -->
+    <span>192</span> 
+    <!-- 使用span標籤顯示身高值 "192" -->
+    <br/> 
+    <!-- 換行 -->
+    <label for="weight">體重(kg)：</label> 
+    <!-- 顯示 "體重(kg)" 的標籤 -->
+    <span>80</span> 
+    <!-- 使用span標籤顯示體重值 "80" -->
+    <br/> 
+    <!-- 換行 -->
+    <br/> 
+    <!-- 再次換行，形成空白行 -->
+
+    <textarea name="comment" id="comment" cols="30" rows="10"></textarea> 
+    <!-- 創建一個文本框供使用者輸入意見或評論，列數為10，欄數為30 -->
+    <br/> 
+    <!-- 換行 -->
+    <br/> 
+    <!-- 再次換行，形成空白行 -->
+
+    <button id="upload">提交</button> 
+    <!-- 創建一個按鈕，按鈕文字為"提交" -->
+    <hr/> 
+    <!-- 插入一條水平分隔線 -->
+
+    <a href="https://www.w3schools.com/html/html_links.asp">w3schools_html</a> 
+    <!-- 建立一個超鏈接，鏈接到W3Schools的HTML教程，顯示文字為"w3schools_html" -->
+</body>
+<!-- 結束內文 -->
+</html>
+<!-- 結束html -->
