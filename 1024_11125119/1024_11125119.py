@@ -1,9 +1,8 @@
 import requests
-from pprint import pprint
 import json
 import math
-app_id = 's11125131-2cf17eb7-3f8e-41c0'
-app_key = 'ac899a07-5b2e-4ce1-a2d7-199415be9966'
+app_id = 's11125119-832a55c1-53e4-4952'
+app_key = '52538528-b0c5-44c8-9f4c-86afdcfe30d4'
 
 auth_url="https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
 url = "https://tdx.transportdata.tw/api/basic/v3/Rail/TRA/Station?%24format=JSON"
@@ -52,6 +51,7 @@ if __name__ == '__main__':
         data_response = requests.get(url, headers=d.get_data_header())
 
 data = json.loads(data_response.text)
+
 print(data)
 my_lat = 25.1
 my_lon = 121.5

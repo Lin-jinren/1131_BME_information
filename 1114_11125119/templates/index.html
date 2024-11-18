@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <title>台鐵票價查詢</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        select, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        select:focus, button:focus {
+            border-color: #007bff;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #result h2 {
+            font-size: 20px;
+            color: #333;
+        }
+
+        .fares-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .fare-category {
+            width: 30%;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .fare-category h3 {
+            font-size: 18px;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .fare-category ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .fare-category ul li {
+            background-color: #f0f4f8;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #007bff;
+        }
+
+        /* 手機版調整 */
+        @media (max-width: 768px) {
+            .fares-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .fare-category {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>台鐵票價查詢</h1>
+        <label for="route">選擇路線：</label>
+        <select id="route">
+            <option value="">請選擇路線</option>
+            {% for route in routes %}
+                <option value="{{ route.get('LineID', '') }}">
+                    {{ route.get('LineNameZh', '路線錯誤') }}
+                </option>
+            {% endfor %}
+        </select>
+        <label for="origin">起站：</label>
+        <select id="origin" disabled>
+            <option value="">請先選擇路線</option>
+        </select>
+        <label for="destination">訖站：</label>
+        <select id="destination" disabled>
+            <option value="">請先選擇路線</option>
+        </select>
+        <button id="search" disabled>查詢票價</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            $('#route').change(function() {
+                var route_id = $(this).val();
+                if (route_id) {
+                    $.getJSON('/stations', { route_id: route_id }, function(data) {
+                        $('#origin, #destination').empty().append('<option value="">請選擇車站</option>');
+                        $.each(data, function(index, station) {
+                            $('#origin, #destination').append('<option value="' + station.StationID + '">' + station.StationName + '</option>');
+                        });
+                        $('#origin, #destination, #search').prop('disabled', false);
+                    });
+                } else {
+                    $('#origin, #destination').empty().append('<option value="">請先選擇路線</option>').prop('disabled', true);
+                    $('#search').prop('disabled', true);
+                }
+            });
+
+            $('#search').click(function() {
+                var origin_station_id = $('#origin').val();
+                var destination_station_id = $('#destination').val();
+                
+                if (origin_station_id === destination_station_id) {
+                    $('#result').html('<p style="color:red;">起訖站不能相同</p>');
+                } else if (origin_station_id && destination_station_id) {
+                    $.getJSON('/fare', { origin_station_id: origin_station_id, destination_station_id: destination_station_id }, function(data) {
+                        if (data.length > 0) {
+                            var selfStrengthFares = '<h3>自強號</h3><ul>';
+                            var chuKangFares = '<h3>莒光號</h3><ul>';
+                            var puKuangFares = '<h3>普通車</h3><ul>';
+
+                            $.each(data[0].Fares, function(index, Fare) {
+                                if (Fare.TicketType.includes('自')) {
+                                    selfStrengthFares += '<li>' + Fare.TicketType + ': ' + Fare.Price + '元</li>';
+                                } else if (Fare.TicketType.includes('莒')) {
+                                    chuKangFares += '<li>' + Fare.TicketType + ': ' + Fare.Price + '元</li>';
+                                } else if (Fare.TicketType.includes('普')) {
+                                    puKuangFares += '<li>' + Fare.TicketType + ': ' + Fare.Price + '元</li>';
+                                }
+                                // 跳過包含 "復" 的票價
+                            });
+
+                            selfStrengthFares += '</ul>';
+                            chuKangFares += '</ul>';
+                            puKuangFares += '</ul>';
+
+                            $('#result').html(
+                                '<h2>票價資訊：</h2>' +
+                                '<div class="fares-container">' +
+                                    '<div class="fare-category">' + selfStrengthFares + '</div>' +
+                                    '<div class="fare-category">' + chuKangFares + '</div>' +
+                                    '<div class="fare-category">' + puKuangFares + '</div>' +
+                                '</div>'
+                            );
+                        } else {
+                            $('#result').html('<p>無法取得票價資訊</p>');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
