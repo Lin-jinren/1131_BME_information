@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>FitBit API Demo</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- 引入 Chart.js -->
+    </head>
+    <body>
+        <h1>FitBit API Demo</h1>
+        <h2>個人資訊</h2>
+        <table>
+            <tr>
+                <th>姓名</th>
+                <td id="displayName"></td>
+                <th>性別</th>
+                <td id="gender"></td>
+                <th>出生日期</th>
+                <td id="dateOfBirth"></td>
+            </tr>
+            <tr>
+                <th>身高</th>
+                <td id="height"></td>
+                <th>體重</th>
+                <td id="weight"></td>
+                <th>年齡</th>
+                <td id="age"></td>
+            </tr>
+            <tr>
+                <th>時區</th>
+                <td id="timezone"></td>
+                <th>語言</th>
+                <td id="languageLocale"></td>
+                <td colspan="4"></td>
+            </tr>
+        </table>
+        <h1>Heart Rate Data Chart</h1>
+        <div class="chart">
+            <canvas id="heartRateChart"></canvas> <!-- 用來顯示折線圖的畫布 -->
+        </div>
+        
+        <script src="script.js"></script> <!-- 引入 JavaScript 文件 -->
+    </body>
+</html>
